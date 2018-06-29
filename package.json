@@ -1,0 +1,21 @@
+{
+  "name": "eosvotes-monitor",
+  "version": "0.1.0",
+  "description": "EOS Votes Monitor",
+  "main": "index.js",
+  "repository": "git@github.com:EOSVotes/eosvotes-monitor.git",
+  "author": "Denis <denis@eosnation.io>",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts > eosio.forum.jsonl"
+  },
+  "dependencies": {
+    "axios": "*",
+    "cron": "*"
+  },
+  "devDependencies": {
+    "@types/node": "*",
+    "ts-node": "*",
+    "typescript": "*"
+  }
+}
