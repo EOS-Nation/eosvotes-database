@@ -14,7 +14,7 @@ function cron() {
   new CronJob('*/1 * * * * *', async () => {
     // eosio.forum
     task('eosforumtest', basicFilter, API)
-  }, null, true, 'America/Toronto')
+  }, () => {}, true, 'America/Toronto')
 }
 cron()
 
@@ -23,10 +23,10 @@ cron()
  *
  * @param {string} account_name Account name for Smart Contract
  * @param {Function} filter Filter Actions
- * @param {string} api EOSIO API with filter enabled
+ * @param {string} [api] EOSIO API with filter enabled
  * @returns {void}
  */
-async function task(account_name, filter: (actions: any, trx_id?: any) => any[], api) {
+async function task(account_name: string, filter: (actions: any, trx_id?: any) => any[], api = API) {
   const params = {
     account_name,
     pos: -1,
@@ -43,10 +43,10 @@ async function task(account_name, filter: (actions: any, trx_id?: any) => any[],
  * Get Actions
  *
  * @param {Object} params action params
- * @param {string} api EOSIO API endpoint with filters
+ * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} actions
  */
-async function getActions(params, api) {
+async function getActions(params: any, api=API) {
   const url = `${api}/v1/history/get_actions`
   const configs = { responseType: 'JSON' }
   const request = await axios.post(url, params, configs)
@@ -60,7 +60,7 @@ async function getActions(params, api) {
  * @param {Object} trx_ids Transaction Ids (prevents returning duplicates)
  * @returns {Array<Object>} Array of Data
  */
-function basicFilter(actions: any, trx_ids = {}) {
+function basicFilter(actions: any, trx_ids: any = {}) {
   const results = []
   for (const action of actions.actions) {
     // Extract variables from EOSIO get_action
