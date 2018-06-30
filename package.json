@@ -10,11 +10,18 @@
     "start": "ts-node index.ts > eosio.forum.jsonl"
   },
   "dependencies": {
+    "apollo-server-express": "*",
     "axios": "*",
-    "cron": "*"
+    "body-parser": "*",
+    "cron": "*",
+    "express": "*",
+    "graphql": "*",
+    "graphql-tools": "*"
   },
   "devDependencies": {
+    "@types/body-parser": "*",
     "@types/cron": "*",
+    "@types/express": "*",
     "@types/node": "*",
     "ts-node": "*",
     "typescript": "*"
