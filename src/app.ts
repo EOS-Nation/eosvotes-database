@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import eosioForumListener from './listeners/eosio.forum';
+import eosioListener from './listeners/eosio';
 
 mongoose.connect('mongodb://localhost:27017/eosvotes', (err) => {
     if (err) {
@@ -9,5 +10,6 @@ mongoose.connect('mongodb://localhost:27017/eosvotes', (err) => {
     else {
         console.log('Connected to MongoDb');
         eosioForumListener()
+        eosioListener()
     }
 });

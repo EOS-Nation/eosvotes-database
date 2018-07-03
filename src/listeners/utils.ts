@@ -11,7 +11,7 @@ export const API = 'https://api.eosn.io'
  * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
  * @param {Object} [trx_ids={}] Transaction IDs
  */
-export async function task(account_name: string, filter: <Data = BasicFilterData>(actions: any, trx_id?: any) => Data[], api = API, trx_ids = {}) {
+export async function task(account_name: string, filter: (actions: any, trx_id?: any) => any[], api = API, trx_ids = {}) {
   const params = {
     account_name,
     pos: -1,
@@ -43,7 +43,7 @@ export async function getActions(params: any, api=API) {
  * @param {Object} trx_ids Transaction Ids (prevents returning duplicates)
  * @returns {Array<Object>} Array of Data
  */
-export function basicFilter<Data = BasicFilterData>(actions: any, trx_ids: any = {}): Data[] {
+export function basicFilter(actions: any, trx_ids: any = {}): any[] {
   const results = []
   for (const action of actions.actions) {
     // Extract variables from EOSIO get_action
@@ -56,18 +56,15 @@ export function basicFilter<Data = BasicFilterData>(actions: any, trx_ids: any =
       trx_ids[trx_id] = true
 
       // Store Result as an Array
-      const result = Object.assign(data, {'act.account': account, 'act.name': name, trx_id, block_num, block_time});
+      const result = Object.assign(data, {
+        'action.account': account,
+        'action.name': name,
+        'action.trx_id': trx_id,
+        'action.block_num': block_num,
+        'action.block_time': block_time
+      });
       results.push(result)
     }
   }
   return results
-}
-
-interface BasicFilterData {
-  account: string,
-  name: string,
-  trx_id: string,
-  block_num: number,
-  block_time: string,
-  [key: string]: any
 }

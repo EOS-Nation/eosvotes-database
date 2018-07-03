@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { basicFilter, task, API } from './utils';
-import { savePost, saveRemove, saveVote } from '../controllers/eosio.forum';
+import { saveDelegatebw, saveUndelegatebw } from '../controllers';
 
 // Global Memory - Store Transactions IDs
 const trx_ids = {}
@@ -12,12 +12,12 @@ export default function eosioForumListener() {
   new CronJob('*/2 * * * * *', async () => {
     const dataset = await task('eosio', basicFilter, API, trx_ids)
     for (const data of dataset) {
-      switch (data['act.name']) {
+      switch (data['action.name']) {
         case 'undelegatebw':
-          // saveUndelegatebw(data)
+          saveUndelegatebw(data)
           break;
         case 'delegatebw':
-          // saveDelegatebw(data)
+          saveDelegatebw(data)
           break;
       }
     }

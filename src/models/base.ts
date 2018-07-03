@@ -1,21 +1,21 @@
 export const BaseSchema = {
-  'act.name': {
+  'action.name': {
       type: String,
       required: true,
   },
-  'act.account': {
+  'action.account': {
       type: String,
       required: true,
   },
-  block_num: {
+  'action.block_num': {
       type: Number,
       required: true,
   },
-  block_time: {
+  'action.block_time': {
       type: String,
       required: true,
   },
-  trx_id: {
+  'action.trx_id': {
       type: String,
       required: true,
       unique: true

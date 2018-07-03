@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 import { BaseSchema } from './base';
 
 // Models = Schemas for MongoDB
-export const PostSchema = new Schema(Object.assign(BaseSchema, {
+export const PostSchema = new Schema(Object.assign({
     // Required
     account: {
         type: String,
@@ -33,9 +33,9 @@ export const PostSchema = new Schema(Object.assign(BaseSchema, {
     json_metadata: {
         type: String
     }
-}));
+}, BaseSchema));
 
-export const VoteSchema = new Schema(Object.assign(BaseSchema, {
+export const VoteSchema = new Schema(Object.assign({
     voter: {
         type: String,
         required: 'account_name'
@@ -52,9 +52,9 @@ export const VoteSchema = new Schema(Object.assign(BaseSchema, {
         type: String,
         required: 'vote_value'
     }
-}));
+}, BaseSchema));
 
-export const RemoveSchema = new Schema(Object.assign(BaseSchema, {
+export const RemoveSchema = new Schema({
     voter: {
         type: String,
         required: 'account_name'
@@ -62,5 +62,27 @@ export const RemoveSchema = new Schema(Object.assign(BaseSchema, {
     post_uuid: {
         type: String,
         required: 'post_uuid'
+    },
+    // Extras
+    'action.name': {
+        type: String,
+        required: true,
+    },
+    'action.account': {
+        type: String,
+        required: true,
+    },
+    'action.block_num': {
+        type: Number,
+        required: true,
+    },
+    'action.block_time': {
+        type: String,
+        required: true,
+    },
+    'action.trx_id': {
+        type: String,
+        required: true,
+        unique: true
     }
-}));
+});
