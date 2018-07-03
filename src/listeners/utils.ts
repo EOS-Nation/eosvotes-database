@@ -1,32 +1,17 @@
 import axios from 'axios';
-import {CronJob} from 'cron';
 
 // User Configurations
-const API = 'http://api.eosnewyork.io'
-
-// Global Memory - Store Transactions IDs
-const trx_ids = {}
-
-/**
- * Scheduler that executes scripts every X seconds
- */
-function cron() {
-  new CronJob('*/1 * * * * *', async () => {
-    // eosio.forum
-    task('eosforumtest', basicFilter, API)
-  }, () => {}, true, 'America/Toronto')
-}
-cron()
+export const API = 'https://api.eosn.io'
 
 /**
  * General purpose Task
  *
  * @param {string} account_name Account name for Smart Contract
  * @param {Function} filter Filter Actions
- * @param {string} [api] EOSIO API with filter enabled
- * @returns {void}
+ * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
+ * @param {Object} [trx_ids={}] Transaction IDs
  */
-async function task(account_name: string, filter: (actions: any, trx_id?: any) => any[], api = API) {
+export async function task(account_name: string, filter: <Data = BasicFilterData>(actions: any, trx_id?: any) => Data[], api = API, trx_ids = {}) {
   const params = {
     account_name,
     pos: -1,
@@ -34,9 +19,7 @@ async function task(account_name: string, filter: (actions: any, trx_id?: any) =
   }
   const actions = await getActions(params, api)
 
-  for (const data of filter(actions, trx_ids)) {
-    process.stdout.write(JSON.stringify(data) + '\n')
-  }
+  return filter(actions, trx_ids)
 }
 
 /**
@@ -46,7 +29,7 @@ async function task(account_name: string, filter: (actions: any, trx_id?: any) =
  * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} actions
  */
-async function getActions(params: any, api=API) {
+export async function getActions(params: any, api=API) {
   const url = `${api}/v1/history/get_actions`
   const configs = { responseType: 'JSON' }
   const request = await axios.post(url, params, configs)
@@ -60,22 +43,31 @@ async function getActions(params: any, api=API) {
  * @param {Object} trx_ids Transaction Ids (prevents returning duplicates)
  * @returns {Array<Object>} Array of Data
  */
-function basicFilter(actions: any, trx_ids: any = {}) {
+export function basicFilter<Data = BasicFilterData>(actions: any, trx_ids: any = {}): Data[] {
   const results = []
   for (const action of actions.actions) {
     // Extract variables from EOSIO get_action
     const {action_trace, block_num, block_time} = action;
     const {act, trx_id} = action_trace;
-    const {data} = act;
+    const {data, account, name} = act;
 
     if (!trx_ids[trx_id]) {
       // Store Transaction ID to prevent returning same action twice
       trx_ids[trx_id] = true
 
       // Store Result as an Array
-      const result = Object.assign(data, {trx_id, block_num, block_time});
+      const result = Object.assign(data, {'act.account': account, 'act.name': name, trx_id, block_num, block_time});
       results.push(result)
     }
   }
   return results
+}
+
+interface BasicFilterData {
+  account: string,
+  name: string,
+  trx_id: string,
+  block_num: number,
+  block_time: string,
+  [key: string]: any
 }
