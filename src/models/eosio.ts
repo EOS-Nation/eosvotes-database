@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { BaseSchema } from './base';
+import { BaseActionSchema } from './base';
 
 // Models = Schemas for MongoDB
 export const DelegatebwSchema = new Schema(Object.assign({
@@ -24,7 +24,7 @@ export const DelegatebwSchema = new Schema(Object.assign({
         type: Boolean,
         required: true
     },
-}, BaseSchema));
+}, BaseActionSchema));
 
 export const UndelegatebwSchema = new Schema(Object.assign({
     // Required
@@ -40,4 +40,4 @@ export const UndelegatebwSchema = new Schema(Object.assign({
     unstake_cpu_quantity: {
         type: String
     }
-}, BaseSchema));
+}, BaseActionSchema));

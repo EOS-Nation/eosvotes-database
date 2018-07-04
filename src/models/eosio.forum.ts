@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { BaseSchema } from './base';
+import { BaseActionSchema } from './base';
 
 // Models = Schemas for MongoDB
 export const PostSchema = new Schema(Object.assign({
@@ -33,7 +33,7 @@ export const PostSchema = new Schema(Object.assign({
     json_metadata: {
         type: String
     }
-}, BaseSchema));
+}, BaseActionSchema));
 
 export const VoteSchema = new Schema(Object.assign({
     voter: {
@@ -52,7 +52,7 @@ export const VoteSchema = new Schema(Object.assign({
         type: String,
         required: 'vote_value'
     }
-}, BaseSchema));
+}, BaseActionSchema));
 
 export const RemoveSchema = new Schema({
     voter: {
