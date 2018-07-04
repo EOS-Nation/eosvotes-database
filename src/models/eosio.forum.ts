@@ -31,9 +31,14 @@ export const PostSchema = new Schema(Object.assign({
         type: Boolean
     },
     json_metadata: {
-        type: String
+        type: Object,
+        set: (v: any) => {
+            if (!v) return {}
+            return JSON.parse(v)
+        },
+        get: (v: any) => { return v }
     }
-}, BaseActionSchema));
+}, BaseActionSchema))
 
 export const VoteSchema = new Schema(Object.assign({
     voter: {
@@ -54,7 +59,7 @@ export const VoteSchema = new Schema(Object.assign({
     }
 }, BaseActionSchema));
 
-export const RemoveSchema = new Schema({
+export const RemoveSchema = new Schema(Object.assign({
     voter: {
         type: String,
         required: 'account_name'
@@ -62,27 +67,5 @@ export const RemoveSchema = new Schema({
     post_uuid: {
         type: String,
         required: 'post_uuid'
-    },
-    // Extras
-    'action.name': {
-        type: String,
-        required: true,
-    },
-    'action.account': {
-        type: String,
-        required: true,
-    },
-    'action.block_num': {
-        type: Number,
-        required: true,
-    },
-    'action.block_time': {
-        type: String,
-        required: true,
-    },
-    'action.trx_id': {
-        type: String,
-        required: true,
-        unique: true
     }
-});
+}, BaseActionSchema));

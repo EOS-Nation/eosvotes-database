@@ -24,8 +24,10 @@
     "@types/body-parser": "*",
     "@types/cron": "*",
     "@types/express": "*",
+    "@types/mongodb": "*",
     "@types/mongoose": "*",
     "@types/node": "*",
+    "eosjs": "*",
     "ts-node": "*",
     "typescript": "*"
   }
