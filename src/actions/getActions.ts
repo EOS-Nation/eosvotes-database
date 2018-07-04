@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-// User Configurations
-export const API = 'https://api.eosn.io'
-
 /**
  * General purpose Task
  *
@@ -10,7 +7,7 @@ export const API = 'https://api.eosn.io'
  * @param {Function} filter Filter Actions
  * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
  */
-export async function task(account_name: string, filter: (actions: any) => any[], api = API, trx_ids = {}) {
+export async function task(account_name: string, filter: (actions: any) => any[], api='https://api.eosn.io') {
   const params = {
     account_name,
     pos: -1,
@@ -28,7 +25,7 @@ export async function task(account_name: string, filter: (actions: any) => any[]
  * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} actions
  */
-export async function getActions(params: any, api=API) {
+export async function getActions(params: any, api='https://api.eosn.io') {
   const url = `${api}/v1/history/get_actions`
   const configs = { responseType: 'JSON' }
   const request = await axios.post(url, params, configs)
