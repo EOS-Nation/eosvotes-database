@@ -41,3 +41,9 @@ https://www.mongodb.com/download-center#compass
 ![image](https://user-images.githubusercontent.com/550895/42353449-69d158c8-808e-11e8-8fdb-4f8681c2487c.png)
 
 ![image](https://user-images.githubusercontent.com/550895/42353446-5d7dee60-808e-11e8-8480-5b07f219185f.png)
+
+## EOS Constitution
+
+### [Article XI - Amending](https://github.com/EOS-Mainnet/governance/blob/master/eosio.system/eosio.system-clause-constitution-rc.md#article-xi---amending)
+
+This Constitution and its subordinate documents shall not be amended except by a vote of the token holders with no less than 15% vote participation among tokens and no fewer than 10% more Yes than No votes, sustained for 30 continuous days within a 120 day period.
