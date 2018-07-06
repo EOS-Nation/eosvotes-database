@@ -47,6 +47,6 @@ function post (account: string,
 }
 
 (async () => {
-  await post(actor, '123', 'Test', 'Test', '', '', 1, '{"foo":"bar","hello":"world"}');
+  await post(actor, '12345', 'Test', 'Test', '', '', 1, '{"hello":"world"}');
   console.log('posted')
 })()

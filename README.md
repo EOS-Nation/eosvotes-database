@@ -9,17 +9,10 @@
 - [ ] Define GraphQL Data schema
 - [ ] Setup CLI for ease of use
 
-## Install
-
-```
-$ npm install
-```
-
-## Start
+## How to Start
 
 ```
 $ docker-compose up -d
-$ npm start
 ```
 
 ## Install MongoDB Compass
