@@ -18,6 +18,7 @@
     "express": "*",
     "graphql": "*",
     "graphql-tools": "*",
+    "mongodb": "3.x",
     "mongoose": "*"
   },
   "devDependencies": {

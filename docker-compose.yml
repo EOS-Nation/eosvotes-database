@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.6'
 
 services:
   app:
@@ -8,12 +8,14 @@ services:
     ports:
       - 3000:3000
     links:
-      - mongo
+      - mongodb
+    depends_on:
+      - mongodb
 
-  mongo:
+  mongodb:
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
       - ./data/db:/data/db
-    command: mongod --smallfiles
+
