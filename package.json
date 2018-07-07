@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "apollo-server-express": "*",
-    "arangojs": "*",
     "axios": "*",
     "body-parser": "*",
     "cron": "*",
+    "dotenv": "*",
     "express": "*",
     "graphql": "*",
     "graphql-tools": "*",
@@ -22,6 +22,7 @@
     "mongoose": "*"
   },
   "devDependencies": {
+    "@types/dotenv": "*",
     "@types/body-parser": "*",
     "@types/cron": "*",
     "@types/express": "*",

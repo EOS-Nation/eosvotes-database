@@ -11,8 +11,22 @@
 
 ## How to Start
 
+Setup Environment variables by adding a `.env` file to your root directory.
+
+**.env**
+
 ```
-$ docker-compose up -d
+MONGO_DATA_DIR=/data/db
+MONGO_LOG_DIR=/dev/null
+MONGO_INITDB_ROOT_USERNAME=user
+MONGO_INITDB_ROOT_PASSWORD=pass
+MONGO_INITDB_DATABASE=eosvotes
+```
+
+Launch application using [Docker Compose](https://docs.docker.com/compose/).
+
+```
+$ docker-compose up
 ```
 
 ## Install MongoDB Compass
