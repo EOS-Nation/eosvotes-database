@@ -16,6 +16,8 @@ export async function getAccount(account_name: string, api='https://api.eosn.io'
 
 function accountFilter(data: any) {
   return {
+    head_block_num: data.head_block_num,
+    head_block_time: data.head_block_time,
     account_name: data.account_name,
     net_weight: data.net_weight,
     cpu_weight: data.cpu_weight,

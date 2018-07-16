@@ -1,5 +1,4 @@
 import { Schema } from 'mongoose';
-import { BaseSchema } from './base';
 
 export const AccountSchema = new Schema(Object.assign({
     // Required
@@ -14,5 +13,13 @@ export const AccountSchema = new Schema(Object.assign({
     cpu_weight: {
         type: Number,
         required: true
+    },
+    head_block_num: {
+        type: Number,
+        required: true
+    },
+    head_block_time: {
+        type: String,
+        required: true
     }
-}, BaseSchema));
+}));

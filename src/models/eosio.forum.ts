@@ -1,27 +1,24 @@
 import { Schema } from 'mongoose';
 import { BaseActionSchema } from './base';
 
-// Models = Schemas for MongoDB
+// Models for eosio.forum
+// https://github.com/eoscanada/eosio.forum/blob/master/abi/forum.abi
 export const PostSchema = new Schema(Object.assign({
     // Required
-    account: {
+    poster: {
         type: String,
-        required: 'account_name'
+        required: 'poster'
     },
     post_uuid: {
         type: String,
         required: 'post_uuid'
-    },
-    title: {
-        type: String,
-        required: 'title'
     },
     content: {
         type: String,
         required: 'content'
     },
     // Optional
-    reply_to_account: {
+    reply_to_poster: {
         type: String
     },
     reply_to_post_uuid: {
@@ -40,32 +37,97 @@ export const PostSchema = new Schema(Object.assign({
     }
 }, BaseActionSchema))
 
+export const ProposeSchema = new Schema(Object.assign({
+    proposer: {
+        type: String,
+        required: 'proposer'
+    },
+    proposal_name: {
+        type: String,
+        required: 'proposal_name'
+    },
+    title: {
+        type: String,
+        required: 'title'
+    },
+    proposal_json: {
+        type: Object,
+        set: (v: any) => {
+            if (!v) return {}
+            return JSON.parse(v)
+        },
+        get: (v: any) => { return v }
+    }
+}, BaseActionSchema));
+
+export const UnproposeSchema = new Schema(Object.assign({
+    proposer: {
+        type: String,
+        required: 'proposer'
+    },
+    proposal_name: {
+        type: String,
+        required: 'proposal_name'
+    }
+}, BaseActionSchema));
+
+export const ProposalSchema = new Schema(Object.assign({
+    proposal_name: {
+        type: String,
+        required: 'proposal_name'
+    },
+    title: {
+        type: String,
+        required: 'title'
+    },
+    proposal_json: {
+        type: Object,
+        set: (v: any) => {
+            if (!v) return {}
+            return JSON.parse(v)
+        },
+        get: (v: any) => { return v }
+    }
+}, BaseActionSchema));
+
+export const UnpostSchema = new Schema(Object.assign({
+    poster: {
+        type: String,
+        required: 'poster'
+    },
+    post_uuid: {
+        type: String,
+        required: 'post_uuid'
+    }
+}, BaseActionSchema));
+
 export const VoteSchema = new Schema(Object.assign({
     voter: {
         type: String,
         required: 'account_name'
     },
-    proposition: {
+    proposer: {
         type: String,
-        required: 'proposition'
+        required: 'proposer'
+    },
+    proposal_name: {
+        type: String,
+        required: 'proposal_name'
     },
     proposition_hash: {
         type: String,
         required: 'proposition_hash'
     },
-    vote_value: {
-        type: String,
-        required: 'vote_value'
-    }
-}, BaseActionSchema));
-
-export const RemoveSchema = new Schema(Object.assign({
-    voter: {
-        type: String,
-        required: 'account_name'
+    vote: {
+        type: Boolean,
+        required: 'vote'
     },
-    post_uuid: {
-        type: String,
-        required: 'post_uuid'
+    vote_json: {
+        type: Object,
+        set: (v: any) => {
+            if (!v) return {}
+            return JSON.parse(v)
+        },
+        get: (v: any) => { return v }
     }
 }, BaseActionSchema));

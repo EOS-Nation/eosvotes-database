@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import { basicFilter, task } from '../actions/getActions';
-import { savePost, saveRemove, saveVote } from '../controllers/eosio.forum';
+import { savePost, saveUnpost, savePropose, saveUnpropose, saveVote } from '../controllers/eosio.forum';
 
 // Listeners = Cron Jobs that listen on accounts and store data into MongoDB
 export default function eosioForumListener() {
@@ -20,11 +20,17 @@ export default function eosioForumListener() {
         case 'post':
           savePost(data)
           break;
+        case 'unpost':
+          saveUnpost(data)
+          break;
+        case 'propose':
+          savePropose(data)
+          break;
+        case 'unpropose':
+          saveUnpropose(data)
+          break;
         case 'vote':
           saveVote(data)
-          break;
-        case 'remove':
-          saveRemove(data)
           break;
       }
     }
