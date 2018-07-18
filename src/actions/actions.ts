@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 /**
  * General purpose Task
@@ -9,15 +9,15 @@ import axios from 'axios';
  * @param {number} [offset=-25] Position Offset
  * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
  */
-export async function task(account_name: string, filter: (actions: any) => any[], api='https://api.eosn.io', pos=-1, offset=-25) {
+export async function task(account_name: string, filter: (actions: any) => any[], api= "https://api.eosn.io", pos= -1, offset= -25) {
   const params = {
     account_name,
     pos,
     offset,
-  }
-  const actions = await getActions(params, api)
+  };
+  const actions = await getActions(params, api);
 
-  return filter(actions)
+  return filter(actions);
 }
 
 /**
@@ -27,11 +27,11 @@ export async function task(account_name: string, filter: (actions: any) => any[]
  * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} actions
  */
-export async function getActions(params: any, api='https://api.eosn.io') {
-  const url = `${api}/v1/history/get_actions`
-  const configs = { responseType: 'JSON' }
-  const request = await axios.post(url, params, configs)
-  return request.data
+export async function getActions(params: any, api= "https://api.eosn.io") {
+  const url = `${api}/v1/history/get_actions`;
+  const configs = { responseType: "JSON" };
+  const request = await axios.post(url, params, configs);
+  return request.data;
 }
 
 /**
@@ -41,7 +41,7 @@ export async function getActions(params: any, api='https://api.eosn.io') {
  * @returns {Array<Object>} Array of Data
  */
 export function basicFilter(actions: any): any[] {
-  const results = []
+  const results = [];
   for (const action of actions.actions) {
     // Extract variables from EOSIO get_action
     const {action_trace, block_num, block_time} = action;
@@ -55,10 +55,10 @@ export function basicFilter(actions: any): any[] {
         trx_id,
         block_num,
         block_time,
-        authorization
-      }
+        authorization,
+      },
     });
-    results.push(result)
+    results.push(result);
   }
-  return results
+  return results;
 }

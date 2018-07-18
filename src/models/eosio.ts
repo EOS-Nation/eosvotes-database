@@ -1,43 +1,43 @@
-import { Schema } from 'mongoose';
-import { BaseActionSchema } from './base';
+import { Schema } from "mongoose";
+import { BaseActionSchema } from "./base";
 
 // Models = Schemas for MongoDB
 export const DelegatebwSchema = new Schema(Object.assign({
     // Required
     from: {
         type: String,
-        required: true
+        required: true,
     },
     receiver: {
         type: String,
-        required: true
+        required: true,
     },
     stake_net_quantity: {
         type: String,
-        required: true
+        required: true,
     },
     stake_cpu_quantity: {
         type: String,
-        required: true
+        required: true,
     },
     transfer: {
         type: Boolean,
-        required: true
+        required: true,
     },
 }, BaseActionSchema));
 
 export const UndelegatebwSchema = new Schema(Object.assign({
     // Required
     from: {
-        type: String
+        type: String,
     },
     receiver: {
-        type: String
+        type: String,
     },
     unstake_net_quantity: {
-        type: String
+        type: String,
     },
     unstake_cpu_quantity: {
-        type: String
-    }
+        type: String,
+    },
 }, BaseActionSchema));

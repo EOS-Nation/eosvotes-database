@@ -5,7 +5,10 @@
     ],
     "jsRules": {},
     "rules": {
-        "variable-name": false
+        "variable-name": false,
+        "no-console": false,
+        "object-literal-sort-keys": false,
+        "max-line-length": false
     },
     "rulesDirectory": []
 }

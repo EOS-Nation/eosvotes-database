@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import { AccountSchema } from '../models/account';
-import { baseSave } from './base';
-import { getAccount } from '../actions'
+import mongoose from "mongoose";
+import { getAccount } from "../actions";
+import { AccountSchema } from "../models/account";
+import { baseSave } from "./base";
 
 /**
  * Fetches Account Details and saves it to MongoDB
@@ -11,10 +11,10 @@ import { getAccount } from '../actions'
  */
 export function saveAccount(account_name: string) {
   getAccount(account_name)
-    .then(data => {
-      baseSave(data, mongoose.model('Account', AccountSchema))
+    .then((data) => {
+      baseSave(data, mongoose.model("Account", AccountSchema));
     })
-    .catch(error => {
-      if (error) console.log(error)
-    })
+    .catch((error) => {
+      if (error) { console.log(error); }
+    });
 }

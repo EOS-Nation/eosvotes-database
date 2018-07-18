@@ -1,25 +1,25 @@
-import { Schema } from 'mongoose';
+import { Schema } from "mongoose";
 
 export const AccountSchema = new Schema(Object.assign({
     // Required
     account_name: {
         type: String,
-        required: true
+        required: true,
     },
     net_weight: {
         type: Number,
-        required: true
+        required: true,
     },
     cpu_weight: {
         type: Number,
-        required: true
+        required: true,
     },
     head_block_num: {
         type: Number,
-        required: true
+        required: true,
     },
     head_block_time: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 }));

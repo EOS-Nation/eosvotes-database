@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 /**
  * Get Actions
@@ -7,16 +7,16 @@ import axios from 'axios';
  * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} Account Details
  */
-export function getAccount(account_name: string, api='https://api.eosn.io') {
-  const url = `${api}/v1/chain/get_account`
-  const configs = { responseType: 'JSON' }
+export function getAccount(account_name: string, api= "https://api.eosn.io") {
+  const url = `${api}/v1/chain/get_account`;
+  const configs = { responseType: "JSON" };
   return axios.post(url, {account_name}, configs)
-    .then(request => {
-      return accountFilter(request.data)
+    .then((request) => {
+      return accountFilter(request.data);
     })
-    .catch(error => {
-      if (error) console.error(error)
-    })
+    .catch((error) => {
+      if (error) { console.error(error); }
+    });
 }
 
 export function accountFilter(data: any) {
@@ -26,5 +26,5 @@ export function accountFilter(data: any) {
     account_name: data.account_name,
     net_weight: data.net_weight,
     cpu_weight: data.cpu_weight,
-  }
+  };
 }

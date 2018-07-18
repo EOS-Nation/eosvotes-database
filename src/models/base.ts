@@ -1,26 +1,26 @@
 export const BaseSchema = {
-    'action.block_num': {
+    "action.block_num": {
         type: Number,
         required: true,
     },
-    'action.block_time': {
+    "action.block_time": {
         type: String,
         required: true,
-    }
-}
+    },
+};
 
 export const BaseActionSchema = Object.assign({
-  'action.name': {
+  "action.name": {
       type: String,
       required: true,
   },
-  'action.account': {
+  "action.account": {
       type: String,
       required: true,
   },
-  'action.trx_id': {
+  "action.trx_id": {
       type: String,
       required: true,
-      unique: true
-  }
-}, BaseSchema)
+      unique: true,
+  },
+}, BaseSchema);

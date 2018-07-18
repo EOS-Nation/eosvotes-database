@@ -1,1 +1,1 @@
-export {default as eosioForum} from './eosio.forum'
+export {default as eosioForum} from "./eosio.forum";
