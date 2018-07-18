@@ -7,14 +7,19 @@ import axios from 'axios';
  * @param {string} [api] EOSIO API endpoint with filters
  * @returns {Object} Account Details
  */
-export async function getAccount(account_name: string, api='https://api.eosn.io') {
+export function getAccount(account_name: string, api='https://api.eosn.io') {
   const url = `${api}/v1/chain/get_account`
   const configs = { responseType: 'JSON' }
-  const request = await axios.post(url, {account_name}, configs)
-  return accountFilter(request.data)
+  return axios.post(url, {account_name}, configs)
+    .then(request => {
+      return accountFilter(request.data)
+    })
+    .catch(error => {
+      if (error) console.error(error)
+    })
 }
 
-function accountFilter(data: any) {
+export function accountFilter(data: any) {
   return {
     head_block_num: data.head_block_num,
     head_block_time: data.head_block_time,
@@ -23,8 +28,3 @@ function accountFilter(data: any) {
     cpu_weight: data.cpu_weight,
   }
 }
-
-// (async () => {
-//   const account = await getAccount('eosforumtest')
-//   console.log(account)
-// })()

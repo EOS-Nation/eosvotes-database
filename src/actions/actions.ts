@@ -5,13 +5,15 @@ import axios from 'axios';
  *
  * @param {string} account_name Account name for Smart Contract
  * @param {Function} filter Filter Actions
+ * @param {number} [pos=-1] Initial Position
+ * @param {number} [offset=-25] Position Offset
  * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
  */
-export async function task(account_name: string, filter: (actions: any) => any[], api='https://api.eosn.io') {
+export async function task(account_name: string, filter: (actions: any) => any[], api='https://api.eosn.io', pos=-1, offset=-25) {
   const params = {
     account_name,
-    pos: -1,
-    offset: -25,
+    pos,
+    offset,
   }
   const actions = await getActions(params, api)
 
@@ -44,15 +46,17 @@ export function basicFilter(actions: any): any[] {
     // Extract variables from EOSIO get_action
     const {action_trace, block_num, block_time} = action;
     const {act, trx_id} = action_trace;
-    const {data, account, name} = act;
-
+    const {data, account, name, authorization} = act;
     // Store Result as an Array
     const result = Object.assign(data, {
-      'action.account': account,
-      'action.name': name,
-      'action.trx_id': trx_id,
-      'action.block_num': block_num,
-      'action.block_time': block_time
+      action: {
+        account,
+        name,
+        trx_id,
+        block_num,
+        block_time,
+        authorization
+      }
     });
     results.push(result)
   }

@@ -1,5 +1,5 @@
 import { CronJob } from 'cron';
-import { basicFilter, task } from '../actions/getActions';
+import { basicFilter, task } from '../actions';
 import { saveDelegatebw, saveUndelegatebw } from '../controllers/eosio';
 
 // Listeners = Cron Jobs that listen on accounts and store data into MongoDB
@@ -13,10 +13,10 @@ export default function eosioListener() {
     const dataset = await task('eosio', basicFilter)
     for (const data of dataset) {
       // Prevent from adding duplicate transactions
-      if (trx_ids[data['action.trx_id']]) continue
-      else trx_ids[data['action.trx_id']] = true
+      if (trx_ids[data.action.trx_id]) continue
+      else trx_ids[data.action.trx_id] = true
 
-      switch (data['action.name']) {
+      switch (data.action.name) {
         case 'undelegatebw':
           saveUndelegatebw(data)
           break;

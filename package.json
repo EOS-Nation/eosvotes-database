@@ -22,15 +22,16 @@
     "mongoose": "*"
   },
   "devDependencies": {
-    "@types/dotenv": "*",
     "@types/body-parser": "*",
     "@types/cron": "*",
+    "@types/dotenv": "*",
     "@types/express": "*",
     "@types/mongodb": "*",
     "@types/mongoose": "*",
     "@types/node": "*",
     "eosjs": "*",
     "ts-node": "*",
+    "tslint": "*",
     "typescript": "*"
   }
 }

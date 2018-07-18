@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import eosioForumListener from './listeners/eosio.forum';
-import eosioListener from './listeners/eosio';
+import * as listeners from './listeners';
+import * as crawlers from './crawlers';
 import config from '../config'
 
 // Retry connection
@@ -16,9 +16,10 @@ mongoose.connection.on('error', err => {
   // process.exit(-1)
 })
 
-mongoose.connection.on('connected', () => {
-    eosioForumListener()
-    eosioListener()
+mongoose.connection.on('connected', async () => {
+    // listeners.eosio()
+    // listeners.eosioForum()
+    await crawlers.eosioForum()
 })
 
 if (config.env === 'development') {
