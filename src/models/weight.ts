@@ -14,6 +14,10 @@ export const WeightSchema = new Schema(Object.assign({
         type: Number,
         required: true,
     },
+    weight: {
+        type: Number,
+        required: true,
+    },
     head_block_num: {
         type: Number,
         required: true,

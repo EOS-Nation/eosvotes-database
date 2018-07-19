@@ -1,24 +1,7 @@
 import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import bodyParser from "body-parser";
 import express from "express";
-import { makeExecutableSchema } from "graphql-tools";
-
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { forum: [Forum] }
-  type Forum { account: String, post_uuid: String, title: String, content: String, reply_to_account: String, reply_to_post_uuid: String, certify: Int, json_metadata: String, trx_id: String, block_num: Int, block_time: String }
-`;
-
-// The resolvers
-const resolvers = {
-  Query: { forum: () => "foo" },
-};
-
-// Put together a schema
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+import schema from "./graphql-schemas";
 
 // Initialize the app
 const app = express();

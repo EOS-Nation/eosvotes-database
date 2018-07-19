@@ -17,8 +17,8 @@ mongoose.connection.on("error", (err) => {
 });
 
 mongoose.connection.on("connected", async () => {
-    listeners.eosio();
-    listeners.eosioForum();
+    // listeners.eosio();
+    // listeners.eosioForum();
     await crawlers.eosioForum();
 });
 

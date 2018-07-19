@@ -31,7 +31,11 @@ export const PostSchema = new Schema(Object.assign({
         type: Object,
         set: (v: any) => {
             if (!v) { return {}; }
-            return JSON.parse(v);
+            try {
+                return JSON.parse(v);
+            } catch (e) {
+                return {};
+            }
         },
         get: (v: any) => v,
     },
@@ -54,7 +58,11 @@ export const ProposeSchema = new Schema(Object.assign({
         type: Object,
         set: (v: any) => {
             if (!v) { return {}; }
-            return JSON.parse(v);
+            try {
+                return JSON.parse(v);
+            } catch (e) {
+                return {};
+            }
         },
         get: (v: any) => v,
     },
@@ -84,7 +92,11 @@ export const ProposalSchema = new Schema(Object.assign({
         type: Object,
         set: (v: any) => {
             if (!v) { return {}; }
-            return JSON.parse(v);
+            try {
+                return JSON.parse(v);
+            } catch (e) {
+                return {};
+            }
         },
         get: (v: any) => v,
     },
@@ -126,7 +138,11 @@ export const VoteSchema = new Schema(Object.assign({
         type: Object,
         set: (v: any) => {
             if (!v) { return {}; }
-            return JSON.parse(v);
+            try {
+                return JSON.parse(v);
+            } catch (e) {
+                return {};
+            }
         },
         get: (v: any) => v,
     },

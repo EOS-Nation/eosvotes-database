@@ -26,6 +26,7 @@ export function accountFilter(data: any) {
     account_name: data.account_name,
     net_weight: data.net_weight,
     cpu_weight: data.cpu_weight,
+    weight: data.net_weight + data.cpu_weight,
   };
 }
 

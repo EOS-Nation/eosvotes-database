@@ -1,12 +1,15 @@
+import mongoose from "mongoose";
 import { basicFilter, task } from "../actions/actions";
 import { savePost, savePropose, saveUnpost, saveUnpropose, saveVote, saveWeight } from "../controllers";
+import { WeightSchema } from "../models/weight";
+
+const uniqueWeights: any = {};
 
 export default function eosioForumCrawler() {
     console.log("start eosio.forum crawler");
     const api = "https://api.eosn.io";
     let pos = 0;
     const offset = 249;
-    let total = 0;
 
     return new Promise(async (resolve, reject) => {
         while (true) {
@@ -16,13 +19,15 @@ export default function eosioForumCrawler() {
                 case "post":
                     if (data.poster) {
                         savePost(data);
-                        await saveWeight(data.poster);
+                        if (!uniqueWeights[data.poster]) { await saveWeight(data.poster); }
+                        uniqueWeights[data.poster] = true;
                     }
                     break;
                 case "vote":
                     if (data.voter) {
                         saveVote(data);
-                        await saveWeight(data.voter);
+                        if (!uniqueWeights[data.voter]) { await saveWeight(data.voter); }
+                        uniqueWeights[data.voter] = true;
                     }
                     break;
                 case "unpost":
@@ -38,9 +43,8 @@ export default function eosioForumCrawler() {
             }
             if (dataset.length === 0) { break; }
             pos += 250;
-            total += dataset.length;
         }
         // Crawler finished
-        return resolve(true);
+        return resolve();
     });
 }
