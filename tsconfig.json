@@ -8,6 +8,23 @@
     "strict": true,                           /* Enable all strict type-checking options. */
 
     /* Module Resolution Options */
-    "esModuleInterop": true                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+    "esModuleInterop": true,                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+
+    // https://github.com/apollographql/graphql-subscriptions/issues/83#issuecomment-312469236
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.proxy",
+      "es2015.reflect",
+      "es2015.symbol",
+      "es2015.symbol.wellknown",
+      "esnext.asynciterable"
+    ],
   }
 }

@@ -1,6 +1,6 @@
 import { CronJob } from "cron";
 import { basicFilter, task } from "../actions";
-import { saveAccount, savePost, savePropose, saveUnpost, saveUnpropose, saveVote } from "../controllers";
+import { savePost, savePropose, saveUnpost, saveUnpropose, saveVote, saveWeight } from "../controllers";
 
 // Listeners = Cron Jobs that listen on accounts and store data into MongoDB
 export default function eosioForumListener() {
@@ -14,21 +14,25 @@ export default function eosioForumListener() {
       if (trx_ids[data.action.trx_id]) { continue; } else { trx_ids[data.action.trx_id] = true; }
 
       switch (data.action.name) {
-        case "post":
-          savePost(data);
-          saveAccount(data.poster);
+      case "post":
+          if (data.poster) {
+              savePost(data);
+              await saveWeight(data.poster);
+          }
           break;
-        case "vote":
-          saveVote(data);
-          saveAccount(data.voter);
+      case "vote":
+          if (data.voter) {
+              saveVote(data);
+              await saveWeight(data.voter);
+          }
           break;
-        case "unpost":
+      case "unpost":
           saveUnpost(data);
           break;
-        case "propose":
+      case "propose":
           savePropose(data);
           break;
-        case "unpropose":
+      case "unpropose":
           saveUnpropose(data);
           break;
       }

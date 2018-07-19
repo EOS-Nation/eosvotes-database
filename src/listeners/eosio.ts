@@ -1,6 +1,7 @@
 import { CronJob } from "cron";
 import { basicFilter, task } from "../actions";
 import { saveDelegatebw, saveUndelegatebw } from "../controllers/eosio";
+import { saveWeight } from "../controllers/weight";
 
 // Listeners = Cron Jobs that listen on accounts and store data into MongoDB
 export default function eosioListener() {
@@ -16,9 +17,13 @@ export default function eosioListener() {
       switch (data.action.name) {
         case "undelegatebw":
           saveUndelegatebw(data);
+          await saveWeight(data.from);
+          if (data.from !== data.receiver) { await saveWeight(data.receiver); }
           break;
         case "delegatebw":
           saveDelegatebw(data);
+          await saveWeight(data.from);
+          if (data.from !== data.receiver) { await saveWeight(data.receiver); }
           break;
       }
     }

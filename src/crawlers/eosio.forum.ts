@@ -1,5 +1,5 @@
 import { basicFilter, task } from "../actions/actions";
-import { saveAccount, savePost, savePropose, saveUnpost, saveUnpropose, saveVote } from "../controllers";
+import { savePost, savePropose, saveUnpost, saveUnpropose, saveVote, saveWeight } from "../controllers";
 
 export default function eosioForumCrawler() {
     console.log("start eosio.forum crawler");
@@ -14,25 +14,28 @@ export default function eosioForumCrawler() {
             for (const data of dataset) {
                 switch (data.action.name) {
                 case "post":
-                    // savePost(data)
-                    saveAccount(data.poster);
+                    if (data.poster) {
+                        savePost(data);
+                        await saveWeight(data.poster);
+                    }
                     break;
-                // case 'vote':
-                //     saveVote(data)
-                //     saveAccount(data.voter)
-                //     break;
-                // case 'unpost':
-                //     saveUnpost(data)
-                //     break;
-                // case 'propose':
-                //     savePropose(data)
-                //     break;
-                // case 'unpropose':
-                //     saveUnpropose(data)
-                //     break;
+                case "vote":
+                    if (data.voter) {
+                        saveVote(data);
+                        await saveWeight(data.voter);
+                    }
+                    break;
+                case "unpost":
+                    saveUnpost(data);
+                    break;
+                case "propose":
+                    savePropose(data);
+                    break;
+                case "unpropose":
+                    saveUnpropose(data);
+                    break;
                 }
             }
-            break;
             if (dataset.length === 0) { break; }
             pos += 250;
             total += dataset.length;

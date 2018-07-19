@@ -25,7 +25,7 @@ export const PostSchema = new Schema(Object.assign({
         type: String,
     },
     certify: {
-        type: Boolean,
+        type: Number,
     },
     json_metadata: {
         type: Object,

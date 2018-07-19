@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const AccountSchema = new Schema(Object.assign({
+export const WeightSchema = new Schema(Object.assign({
     // Required
     account_name: {
         type: String,

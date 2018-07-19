@@ -2,7 +2,6 @@ import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import bodyParser from "body-parser";
 import express from "express";
 import { makeExecutableSchema } from "graphql-tools";
-import { eosioForumData } from "../data";
 
 // The GraphQL schema in string form
 const typeDefs = `
@@ -12,7 +11,7 @@ const typeDefs = `
 
 // The resolvers
 const resolvers = {
-  Query: { forum: () => eosioForumData },
+  Query: { forum: () => "foo" },
 };
 
 // Put together a schema

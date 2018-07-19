@@ -28,3 +28,8 @@ export function accountFilter(data: any) {
     cpu_weight: data.cpu_weight,
   };
 }
+
+// (async () => {
+//   const data = await getAccount("deniscarrier");
+//   console.log(data);
+// })();
