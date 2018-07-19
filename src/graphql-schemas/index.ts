@@ -1,7 +1,5 @@
 import { makeExecutableSchema } from "graphql-tools";
 import { filter, find } from "lodash";
-import path from "path";
-import assert from "util";
 import connect from "../mongodb";
 
 const posts: any[] = require("../../test/data/posts.json");
@@ -83,6 +81,12 @@ const typeDefs = `
         # Post UUID
         post_uuid: String,
 
+        # Voters Count
+        voters_count: Int
+
+        # Voters
+        voters: [Weight]
+
         # Weight
         votes: String,
     }
@@ -108,17 +112,22 @@ const resolvers: any = {
     Query: {
         tally: (_: any, { post_uuid, min_block_num, max_block_num }: any) => {
             if (!post_uuid) { throw new Error("post_uuid is required"); }
-            const voters: any = {};
+            const posters: any = {};
             const uniques: any = {};
+            const voters: any[] = [];
             let votes = 0;
 
             // Retrieve all voters for post
-            posts.forEach(({poster}) => {
-                voters[poster] = poster;
+            posts.forEach((item) => {
+                const {poster} = item;
+                // exclude posts not related to Post UUID
+                if (post_uuid !== item.post_uuid && post_uuid !== item.reply_to_post_uuid) { return false; }
+                posters[poster] = poster;
             });
 
             // Calculate weights of all voters for a giving post
-            weights.forEach(({account_name, weight, head_block_num}) => {
+            weights.forEach((item) => {
+                const {account_name, weight, head_block_num} = item;
                 // Exclude votes that are not within Min & Max blocks
                 if (min_block_num && head_block_num <= min_block_num) { return false; }
                 if (max_block_num && head_block_num >= max_block_num) { return false; }
@@ -127,46 +136,50 @@ const resolvers: any = {
                 if (uniques[account_name]) { return false; }
                 uniques[account_name] = true;
 
-                // Accumulate Voting weight
-                if (voters[account_name]) { votes += weight; }
+                // Accumulate Poster's voting weight
+                if (posters[account_name]) {
+                    votes += weight;
+                    voters.push(item);
+                }
             });
 
             // Metrics
-            const votes_count = Object.keys(voters).length;
+            const voters_count = voters.length;
 
             return {
                 post_uuid,
-                votes_count,
+                voters_count,
+                voters,
                 votes: `${votes / 10000} EOS`,
             };
         },
         weights: (_: any, { min_block_num, max_block_num, min_weight, max_weight }: any) => {
-        const uniques: any = {};
-        return weights.filter(({head_block_num, weight, account_name}) => {
-            if (min_block_num && head_block_num <= min_block_num) { return false; }
-            if (max_block_num && head_block_num >= max_block_num) { return false; }
-            if (min_weight && weight <= min_weight) { return false; }
-            if (max_weight && weight >= max_weight) { return false; }
+            const uniques: any = {};
+            return weights.filter(({head_block_num, weight, account_name}) => {
+                if (min_block_num && head_block_num <= min_block_num) { return false; }
+                if (max_block_num && head_block_num >= max_block_num) { return false; }
+                if (min_weight && weight <= min_weight) { return false; }
+                if (max_weight && weight >= max_weight) { return false; }
 
-            // Prevent duplicate accounts
-            if (uniques[account_name]) { return false; }
-            uniques[account_name] = true;
-            return true;
-        });
+                // Prevent duplicate accounts
+                if (uniques[account_name]) { return false; }
+                uniques[account_name] = true;
+                return true;
+            });
         },
         posts: (_: any, { poster }: any) => {
-        if (poster) { return filter(posts, {poster}); }
-        return posts;
+            if (poster) { return filter(posts, {poster}); }
+            return posts;
         },
         post: (_: any, { post_uuid, trx_id }: any) => {
-        if (trx_id) { return find(posts, { action: {trx_id} }); }
-        return find(posts, { post_uuid });
+            if (trx_id) { return find(posts, { action: {trx_id} }); }
+            return find(posts, { post_uuid });
         },
     },
 };
 
 // Put together a schema
 export default makeExecutableSchema({
-  typeDefs,
-  resolvers,
+    typeDefs,
+    resolvers,
 });

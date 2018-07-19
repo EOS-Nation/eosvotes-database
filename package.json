@@ -1,13 +1,14 @@
 {
-  "name": "eosvotes-monitor",
+  "name": "eosvotes-database",
   "version": "0.1.0",
-  "description": "EOS Votes Monitor",
+  "description": "EOS Votes Database",
   "main": "index.js",
-  "repository": "git@github.com:EOSVotes/eosvotes-monitor.git",
+  "repository": "git@github.com:EOS-Nation/eosvotes-database.git",
   "author": "Denis <denis@eosnation.io>",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node src/app.js"
+    "start": "tsc && node src/app.js",
+    "graphql": "tsc && node src/graphql.js"
   },
   "dependencies": {
     "apollo-server-express": "*",

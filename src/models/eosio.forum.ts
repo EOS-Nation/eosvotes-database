@@ -13,11 +13,10 @@ export const PostSchema = new Schema(Object.assign({
         type: String,
         required: "post_uuid",
     },
+    // Optional
     content: {
         type: String,
-        required: "content",
     },
-    // Optional
     reply_to_poster: {
         type: String,
     },

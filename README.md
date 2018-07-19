@@ -41,6 +41,7 @@ https://www.mongodb.com/download-center#compass
 
 ### GraphQL Endpoint
 
+![image](https://user-images.githubusercontent.com/550895/42975044-28871236-8b88-11e8-9b99-19fbf978ed45.png)
 ![image](https://user-images.githubusercontent.com/550895/42353435-4c6c67dc-808e-11e8-8089-d63fd3e00cc2.png)
 
 ### MongoDB
