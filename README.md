@@ -33,22 +33,17 @@ $ docker-compose up
 
 https://www.mongodb.com/download-center#compass
 
-## Database
-
-### `eosio.forum` entry
-
-![image](https://user-images.githubusercontent.com/550895/42353424-370975ce-808e-11e8-87c9-561c73a15bad.png)
-
 ### GraphQL Endpoint
 
+For this example, we are using [@thomasbcox's message](https://eos-forum.novusphere.io/#/e/novusphere/cb3b0f024a55efffcfbf0a8af4057f015e975c1fd662344d3984d22c93c778af) as a Post UUID.
+
+We can easily calculate that the `post` has `422.1 EOS` of voting power towards 💪.
+
 ![image](https://user-images.githubusercontent.com/550895/42975044-28871236-8b88-11e8-9b99-19fbf978ed45.png)
-![image](https://user-images.githubusercontent.com/550895/42353435-4c6c67dc-808e-11e8-8089-d63fd3e00cc2.png)
 
-### MongoDB
+## Database
 
-![image](https://user-images.githubusercontent.com/550895/42353449-69d158c8-808e-11e8-8fdb-4f8681c2487c.png)
-
-![image](https://user-images.githubusercontent.com/550895/42353446-5d7dee60-808e-11e8-8480-5b07f219185f.png)
+![image](https://user-images.githubusercontent.com/550895/42975163-c9ac4a00-8b88-11e8-96b3-7c97d7909fd0.png)
 
 ## EOS Constitution
 
