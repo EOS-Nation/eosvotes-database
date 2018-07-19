@@ -5,8 +5,8 @@
 ## Goals
 
 - [x] Build listeners on `eosio` & `eosio.forum` that dumps action data into MongoDB
-- [ ] Tracking for EOS token Staked Balance
-- [ ] Define GraphQL Data schema
+- [x] Tracking for EOS token Staked Balance
+- [x] Define GraphQL Data schema
 - [ ] Setup CLI for ease of use
 
 ## How to Start
