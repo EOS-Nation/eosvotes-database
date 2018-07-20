@@ -27,6 +27,7 @@
     "@types/cron": "*",
     "@types/dotenv": "*",
     "@types/express": "*",
+    "@types/graphql": "^0.13.3",
     "@types/lodash": "*",
     "@types/mongodb": "*",
     "@types/mongoose": "*",

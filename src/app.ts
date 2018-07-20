@@ -8,7 +8,7 @@ const url = `mongodb://mongodb:27017/eosvotes`;
 // Retry connection
 function connect() {
   console.log("MongoDB connection with retry");
-  return mongoose.connect(url, { useNewUrlParser: true });
+  return mongoose.connect(url);
 }
 
 // Exit application on error
