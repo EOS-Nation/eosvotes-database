@@ -94,6 +94,7 @@ const typeDefs = `
     # Query
     type Query {
         # Vote Tally
+        # Example: tally(post_uuid:"d0a33f1e-95a5-42a9-bab4-3d4f9c61be50")
         tally(post_uuid: String): Tally
 
         # Multiple Weights
