@@ -13,7 +13,7 @@ export default function eosioForumCrawler() {
 
     return new Promise(async (resolve, reject) => {
         while (true) {
-            const dataset = await task("eosforumtest", basicFilter, api, pos, offset);
+            const dataset = await task("eosforumtest", basicFilter, pos, offset, api);
             for (const data of dataset) {
                 switch (data.action.name) {
                 case "post":

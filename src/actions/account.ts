@@ -30,7 +30,7 @@ export function accountFilter(data: any) {
   };
 }
 
-// (async () => {
-//   const data = await getAccount("deniscarrier");
-//   console.log(data);
-// })();
+(async () => {
+  const data = await getAccount("deniscarrier");
+  console.log(data);
+})();

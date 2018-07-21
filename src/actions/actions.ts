@@ -9,7 +9,7 @@ import axios from "axios";
  * @param {number} [offset=-25] Position Offset
  * @param {string} [api='https://api.eosn.io'] EOSIO API with filter enabled
  */
-export async function task(account_name: string, filter: (actions: any) => any[], api= "https://api.eosn.io", pos= -1, offset= -25) {
+export async function task(account_name: string, filter: (actions: any) => any[], pos= -1, offset= -25, api= "https://api.eosn.io") {
   const params = {
     account_name,
     pos,
@@ -31,6 +31,7 @@ export async function getActions(params: any, api= "https://api.eosn.io") {
   const url = `${api}/v1/history/get_actions`;
   const configs = { responseType: "JSON" };
   const request = await axios.post(url, params, configs);
+  console.log(JSON.stringify(request.data, null, 2));
   return request.data;
 }
 
@@ -62,3 +63,8 @@ export function basicFilter(actions: any): any[] {
   }
   return results;
 }
+
+(async () => {
+  const data = await task("eosforumtest", basicFilter, -1, -1);
+  console.log(data);
+})();

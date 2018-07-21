@@ -8,6 +8,7 @@
 - [x] Tracking for EOS token Staked Balance
 - [x] Define GraphQL Data schema
 - [ ] Setup CLI for ease of use
+- [ ] Resistant to spamming
 
 ## How to Start
 
