@@ -4,10 +4,10 @@ import { MongoClient } from "mongodb";
  * Get Account Actions
  *
  * @param {MongoClient} client MongoDB Client
- * @param {string} name Account Name
- * @param {Array<string>} filterFields Filter account name by specific fields
  * @param {Array<string>} filterActions Filter by actions names
  * @param {Object} [options={}] Optional Parameters
+ * @param {string} [options.accountName] Account Name (must also include "options.accountNameKeys")
+ * @param {Array<string>} [options.accountNameKeys] Filter accountName by specific keys
  * @param {number} [options.lte_block_num] Less-than or equal (<=) the Reference Block Number
  * @param {number} [options.gte_block_num] Greater-than or equal (>=) the Head Block Number
  * @returns {AggregationCursor} MongoDB Aggregation Cursor
@@ -21,7 +21,9 @@ import { MongoClient } from "mongodb";
  * const actions = await getAccountActions(client, "heztcmjqgege", fields, actions, options);
  * console.log(await actions.toArray());
  */
-export function getAccountActions(client: MongoClient, name: string, filterFields: string[], filterActions: string[], options: {
+export function getActions(client: MongoClient, filterActions: string[], options: {
+    accountName?: string,
+    accountNameKeys?: string[],
     lte_block_num?: number,
     gte_block_num?: number,
 } = {}) {
@@ -29,23 +31,37 @@ export function getAccountActions(client: MongoClient, name: string, filterField
     const db = client.db("EOS");
     const collection = db.collection("actions");
 
-    const pipeline: any = [
-        // Filter accounts based on specific fields using name
-        {
-            $match: { $or: filterFields.map((field) => {
+    // Optional Parameters
+    const accountName = options.accountName;
+    const accountNameKeys = options.accountNameKeys || [];
+
+    // Asserts
+    if (accountName && !accountNameKeys.length) { throw new Error("both accountName & accountNameKeys must be included"); }
+
+    // MongoDB Pipeline
+    // https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
+    // https://docs.mongodb.com/manual/reference/operator/aggregation/graphLookup/
+    let pipeline: any = [];
+
+    // Filter accounts based on specific fields using name
+    if (accountName && accountNameKeys) {
+        pipeline.push({
+            $match: { $or: accountNameKeys.map((field) => {
                 const filter: any = {};
-                filter[field] = name;
+                filter[field] = accountName;
                 return filter;
             })},
-        },
+        });
+    }
 
+    pipeline = pipeline.concat([
         // Filter only specific actions
         {
             $match: { $or: filterActions.map((action) => {
                 return { name: action };
             })},
         },
-        // Get Block Number from Transaction Id
+        // Get Reference Block Number from Transaction Id
         {
             $graphLookup: {
                 from: "transactions",
@@ -66,8 +82,7 @@ export function getAccountActions(client: MongoClient, name: string, filterField
                 ref_block_num: { $arrayElemAt: [ "$transaction.transaction_header.ref_block_num", 0 ] },
             },
         },
-    ];
-    // Optional Pipeline filters
+    ]);
 
     // Filter by Reference Block Number
     if (options.lte_block_num) { pipeline.push({$match: {ref_block_num: {$lte: options.lte_block_num }}}); }
@@ -78,12 +93,15 @@ export function getAccountActions(client: MongoClient, name: string, filterField
 
 (async () => {
     const client = await MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true });
-    const filterFields = ["data.from", "data.receiver"];
-    const filterActions = ["delegatebw", "undelegatebw"];
+
+    // Params
+    const actions = ["delegatebw", "undelegatebw"];
     const options = {
-        lte_block_num: 50000,
-        gte_block_num: 25000,
+        accountName: "eosnationftw",
+        accountNameKeys: ["data.from", "data.receiver"],
+        gte_block_num: 0,
+        lte_block_num: Infinity,
     };
-    const actions = await getAccountActions(client, "guytgnzxg4ge", filterFields, filterActions, options);
-    console.log(await actions.toArray());
+    const results = await getActions(client, actions, options);
+    console.log(await results.toArray());
 })();
