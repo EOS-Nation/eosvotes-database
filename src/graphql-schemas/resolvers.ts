@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { getActions } from "../eosio-mongodb-queries/getActions";
 import connect from "../mongodb";
 
 let client: MongoClient;
@@ -9,14 +10,14 @@ export const resolvers: any = {
         tally: (_: any, options: any) => {
             return [];
         },
-        weights: async (_: any, options: any) => {
-            const results = await aggregateWeights(db, options);
+        actions: async (_: any, options: any) => {
+            const results = await getActions(client, options);
             return await results.toArray();
         },
-        posts: async (_: any, options: any) => {
-            const results = await findPosts(db, options);
-            return await results.toArray();
-        },
+        // posts: async (_: any, options: any) => {
+        //     const results = await findPosts(db, options);
+        //     return await results.toArray();
+        // },
     },
 };
 

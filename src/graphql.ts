@@ -2,7 +2,9 @@ import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import bodyParser from "body-parser";
 import express from "express";
 import { makeExecutableSchema } from "graphql-tools";
-import { resolvers, typeDefs } from "./graphql-schemas";
+import { resolvers } from "./graphql-schemas/resolvers";
+import { typeDefs } from "./graphql-schemas/typeDefs";
+
 // import connect from "./mongodb";
 
 export default async function graphql() {
