@@ -1,9 +1,9 @@
-import { Collection, Db } from "mongodb";
+import { MongoClient } from "mongodb";
 
 /**
  * Find Posts
  *
- * @param {Db} db MongoDB Database
+ * @param {MongoClient} client MongoDB Client
  * @param {Object} [options={}] Optional Parameters
  * @param {number} [options.lte_block_num] Less-than or equal (<=) the Head Block Number
  * @param {number} [options.gte_block_num] Greater-than or equal (>=) the Head Block Number
@@ -14,10 +14,10 @@ import { Collection, Db } from "mongodb";
  * @param {string} [options.reply_to_post_uuid] Reply to Post UUID
  * @returns {AggregationCursor} MongoDB Aggregation Cursor
  * @example
- * const posts = await findPosts(collection, {reply_to_post_uuid: "d0a33f1e-95a5-42a9-bab4-3d4f9c61be50"});
+ * const posts = await findPosts(client, {reply_to_post_uuid: "d0a33f1e-95a5-42a9-bab4-3d4f9c61be50"});
  * console.log(await posts.toArray());
  */
-export function findPosts(db: Db, options: {
+export function findPosts(client: MongoClient, options: {
     lte_block_num?: number,
     gte_block_num?: number,
     // Extra filters for Posts
@@ -27,6 +27,7 @@ export function findPosts(db: Db, options: {
     reply_to_poster?: string,
     reply_to_post_uuid?: string,
 } = {}) {
+    const db = client.db("eosvotes");
     const collection = db.collection("posts");
 
     // Filter by Head Block Number

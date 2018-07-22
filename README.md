@@ -9,6 +9,7 @@
 - [x] Define GraphQL Data schema
 - [ ] Setup CLI for ease of use
 - [ ] Resistant to spamming
+- [ ] Leverage EOSIO MongoDB
 
 ## How to Start
 
