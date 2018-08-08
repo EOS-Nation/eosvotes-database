@@ -1,6 +1,6 @@
 # EOS Votes Database
 
-# ❗️DEPCREATED ❗️
+# ❗️DEPRECATED ❗️
 
 This library is no longer being maintained, please refer to the following [EOSIO GraphQL](https://github.com/EOS-BP-Developers/eosio-graphql) and/or [EOSIO MongoDB Queries](https://github.com/EOS-BP-Developers/eosio-mongodb-queries).
 
