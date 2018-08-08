@@ -1,5 +1,9 @@
 # EOS Votes Database
 
+# ❗️DEPCREATED ❗️
+
+This library is no longer being maintained, please refer to the following [EOSIO GraphQL](https://github.com/EOS-BP-Developers/eosio-graphql) and/or [EOSIO MongoDB Queries](https://github.com/EOS-BP-Developers/eosio-mongodb-queries).
+
 > The main goal with `EOS Votes Database` is to "listen" and store data into a well organized/structured MongoDB with an exposed GraphQL endpoint.
 
 ## Goals
